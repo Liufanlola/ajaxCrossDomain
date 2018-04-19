@@ -10,22 +10,25 @@
 <body>
     <script>
     //串行
-    getData('https://api.douban.com/v2/movie/in_theaters',false,1,'串行');
-    getData('https://api.douban.com/v2/movie/in_theaters',false,2,'串行');
+    $.ajax({
+        type:"GET",
+            url:'https://api.douban.com/v2/movie/in_theaters',
+            dataType:'jsonp',
+    }).then(
+        getData('http://quotes.money.163.com/hs/service/marketradar_ajax.php?page=0&query=STYPE%3AEQA&types=JHJJFL&count=28&type=query')
+    )
 
     //并行
     getData('https://api.douban.com/v2/movie/in_theaters',true,1,'并行');
     getData('https://api.douban.com/v2/movie/in_theaters',true,2,'并行');
 
-    function getData(url,async,index,desc){
+    function getData(url){
         $.ajax({
             type:"GET",
             url:url,
-            async:async,
             dataType:'jsonp',
             success:function(data){
-                console.log(desc+'第'+index+'次请求');
-                console.log(data);
+                console.log('成功了');
             },
             error:function(){
                 console.log('失败了');
