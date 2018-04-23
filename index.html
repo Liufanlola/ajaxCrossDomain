@@ -12,15 +12,16 @@
     //串行
     $.ajax({
         type:"GET",
-            url:'https://api.douban.com/v2/movie/in_theaters',
-            dataType:'jsonp',
+        url:'https://api.douban.com/v2/movie/in_theaters',
+        dataType:'jsonp',
     }).then(
         getData('http://quotes.money.163.com/hs/service/marketradar_ajax.php?page=0&query=STYPE%3AEQA&types=JHJJFL&count=28&type=query')
     )
 
     //并行
-    getData('https://api.douban.com/v2/movie/in_theaters',true,1,'并行');
-    getData('https://api.douban.com/v2/movie/in_theaters',true,2,'并行');
+    $.when($.ajax('https://api.douban.com/v2/movie/in_theaters'),$.ajax('http://quotes.money.163.com/hs/service/marketradar_ajax.php?page=0&query=STYPE%3AEQA&types=JHJJFL&count=28&type=query'))
+    .done(function(){ console.log('成功')})
+    .fail(function(){ console.log('失败了')})
 
     function getData(url){
         $.ajax({
